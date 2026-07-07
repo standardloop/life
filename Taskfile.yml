@@ -1,0 +1,14 @@
+---
+version: "3"
+
+vars:
+  PORT: 8080
+
+tasks:
+  default: task --list-all
+  run:
+    cmds:
+      - open -a "Google Chrome" http://localhost:8080/
+      - python3 -m http.server {{.PORT}}
+
+  fmt: npx prettier --write .

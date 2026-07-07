@@ -1,0 +1,21 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  /* outline: 1px */
+  /* border: 1px solid rgb(255, 0, 0); */
+}
