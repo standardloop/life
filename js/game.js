@@ -30,7 +30,7 @@ export class GameOfLife {
   #state;
   constructor(canvas) {
     this.canvas = canvas;
-    this.setGridScale(1);
+    this.setGridScale(20);
     this.#state = GAME_STATE.PLAYING;
     this.setColorStillLifeDifferent(true);
 

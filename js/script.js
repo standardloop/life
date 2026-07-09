@@ -14,6 +14,7 @@ const colorStillLifeToggle = document.getElementById("colorStill");
 // main
 window.onload = () => {
   game = new GameOfLife(canvas);
+  game.start();
 };
 
 window.addEventListener("resize", () => {
@@ -41,7 +42,6 @@ document.addEventListener("visibilitychange", () => {
 
 startBtn.addEventListener("click", () => {
   menuScreen.style.display = "none";
-  canvas.style.display = "block";
   // hud.style.display = "block";
   game.start();
 });

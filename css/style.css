@@ -6,14 +6,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 #menuScreen {
-  background: #1c1c1c;
-  padding: 40px;
-  border-radius: 8px;
-  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.55); /* lets the demo show through */
 }
 
 #menuScreen h1 {
@@ -67,6 +72,18 @@ body {
   cursor: pointer;
 }
 
+#menuPanel {
+  background: #1c1c1c;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+#menuPanel label {
+  display: block;
+  margin: 15px 0 5px;
+}
 #startBtn {
   margin-top: 20px;
   padding: 10px 25px;
@@ -84,7 +101,11 @@ body {
 
 #gameOfLifeCanvas {
   background: #000000;
-  display: none;
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #hud {
