@@ -1,5 +1,5 @@
-import { Cell } from "./cell.js";
 import { Grid } from "./grid.js";
+import { Menu, MENU_BUTTONS } from "./menu.js";
 
 // const isStillLife = (matrix, x, y) => {
 //   //   const numRows = matrix.length;
@@ -19,11 +19,18 @@ import { Grid } from "./grid.js";
 //   return false;
 // };
 
+export const GAME_STATE = Object.freeze({
+  MENU: 0,
+  PLAYING: 1,
+});
+
 export class GameOfLife {
   #elementID;
   #dpr;
   #resolution;
   #grid;
+  #state;
+  #menu;
   constructor(elementID, resolution) {
     this.#resolution = resolution;
     this.#elementID = elementID;
@@ -34,6 +41,15 @@ export class GameOfLife {
       true,
       0.3,
     );
+    this.#state = GAME_STATE.MENU;
+    this.#menu = new Menu(this.getCanvasWidth(), this.getCanvasHeight());
+
+    this.gridScale = 2; // 1 is no scaling
+
+    // loop
+    this.setFPS(1);
+    this.lastFrameTime = 0;
+    this.currAnimation = null;
   }
 
   initCanvas() {
@@ -51,6 +67,7 @@ export class GameOfLife {
   setCTX() {
     this.ctx = this.canvas.getContext("2d");
   }
+
   getCanvasWidth() {
     return Math.floor(this.canvas.width / (this.#dpr * this.#resolution));
   }
@@ -85,7 +102,20 @@ export class GameOfLife {
   }
 
   draw() {
-    this.#grid.draw(this.ctx, true);
+    switch (this.#state) {
+      case GAME_STATE.MENU:
+        this.#menu.draw(
+          this.ctx,
+          this.getCanvasWidth(),
+          this.getCanvasHeight(),
+        );
+        break;
+      case GAME_STATE.PLAYING:
+        this.#grid.draw(this.ctx, true);
+        break;
+      default:
+        alert("unknown erro");
+    }
   }
 
   drawNoCompute() {
@@ -98,15 +128,49 @@ export class GameOfLife {
   }
 
   handleClickEvent(event) {
-    // const rect = this.canvas.getBoundingClientRect();
-    // const mouseX = event.clientX - rect.left;
-    // const mouseY = event.clientY - rect.top;
+    const rect = this.canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    console.log(mouseX, mouseY);
     // console.log(mouseX, mouseY);
 
     // const currGridNumRows = this.grid.length;
     // const currGridNumColumns = this.grid[0].length;
 
-    console.log("TODO");
+    if (this.#state === GAME_STATE.MENU) {
+      const button_pressed = this.#menu.whichButtonWasPressed(mouseX, mouseY);
+      switch (button_pressed) {
+        case MENU_BUTTONS.GO:
+          this.#state = GAME_STATE.PLAYING;
+          break;
+      }
+    }
     //const cellSquareSize =
   }
+
+  setFPS(fps) {
+    this.fps = fps;
+    this.fpsInterval = 1000 / fps;
+  }
+
+  start() {
+    this.lastFrameTime = performance.now();
+    this.loop(this.lastFrameTime);
+  }
+
+  stop() {
+    if (this.currAnimation) {
+      cancelAnimationFrame(this.currAnimation);
+    }
+  }
+
+  loop = (timestamp) => {
+    this.currAnimation = requestAnimationFrame(this.loop);
+
+    const elapsed = timestamp - this.lastFrameTime;
+    if (elapsed > this.fpsInterval) {
+      this.lastFrameTime = timestamp - (elapsed % this.fpsInterval);
+      this.draw();
+    }
+  };
 }

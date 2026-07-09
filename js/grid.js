@@ -115,7 +115,9 @@ export class Grid {
     for (let i = 0; i < currMatrixNumRows; i++) {
       for (let j = 0; j < currMatrixNumColumns; j++) {
         let state = this.#matrix[i][j].value;
+        next[i][j].prevValue = state;
         let neighbors = countNeighborsInMatrix(this.#matrix, i, j);
+
         if (state == 0 && neighbors == 3) {
           next[i][j].value = 1;
         } else if (state == 1 && (neighbors < 2 || neighbors > 3)) {
