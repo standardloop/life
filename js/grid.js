@@ -81,20 +81,26 @@ export class Grid {
     return (countAliveCells() * 100) / (countAliveCells() + countDeadCells());
   }
 
+  drawEmpty(ctx) {
+    const currMatrixNumRows = this.#matrix.length;
+    const currMatrixNumColumns = this.#matrix[0].length;
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0, 0, currMatrixNumRows, currMatrixNumColumns);
+  }
+
   drawMatrix(ctx, computeNext) {
     if (computeNext) {
       this.computeNextGeneration();
     }
     const currMatrixNumRows = this.#matrix.length;
     const currMatrixNumColumns = this.#matrix[0].length;
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, currMatrixNumRows, currMatrixNumColumns);
+
+    this.drawEmpty(ctx);
+
     for (let i = 0; i < currMatrixNumRows; i++) {
       for (let j = 0; j < currMatrixNumColumns; j++) {
-        if (this.#matrix[i][j].value === 1) {
-          ctx.fillStyle = "#00ff80";
-          ctx.fillRect(i, j, 1, 1);
-        }
+        const cell = this.#matrix[i][j];
+        cell.draw(ctx, i, j);
       }
     }
   }
