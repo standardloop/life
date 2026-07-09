@@ -8,9 +8,9 @@ export class Cell {
     this.prevValue = -1;
   }
 
-  draw(ctx, i, j) {
+  draw(ctx, i, j, colorStillLifeDifferent) {
     if (this.value === 1) {
-      if (this.prevValue === 1) {
+      if (this.prevValue === 1 && colorStillLifeDifferent) {
         ctx.fillStyle = "#0095ff";
       } else {
         ctx.fillStyle = "#00ff80";

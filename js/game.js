@@ -1,5 +1,4 @@
 import { Grid } from "./grid.js";
-import { Menu, MENU_BUTTONS } from "./menu.js";
 
 // const isStillLife = (matrix, x, y) => {
 //   //   const numRows = matrix.length;
@@ -20,8 +19,7 @@ import { Menu, MENU_BUTTONS } from "./menu.js";
 // };
 
 export const GAME_STATE = Object.freeze({
-  MENU: 0,
-  PLAYING: 1,
+  PLAYING: 0,
 });
 
 export class GameOfLife {
@@ -30,10 +28,25 @@ export class GameOfLife {
   #gridScale;
   #grid;
   #state;
-  #menu;
-  constructor(elementID) {
-    this.#gridScale = 1;
-    this.#elementID = elementID;
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.setGridScale(1);
+    this.#state = GAME_STATE.PLAYING;
+    this.setColorStillLifeDifferent(true);
+
+    // loop
+    this.setFPS(60);
+
+    this.lastFrameTime = 0;
+    this.currAnimation = null;
+  }
+
+  setColorStillLifeDifferent(colorStillLifeDifferent) {
+    this.colorStillLifeDifferent = colorStillLifeDifferent;
+  }
+
+  setGridScale(gridScale) {
+    this.#gridScale = gridScale;
     this.initCanvas();
     this.#grid = new Grid(
       this.getCanvasWidth(),
@@ -41,18 +54,9 @@ export class GameOfLife {
       true,
       0.3,
     );
-    this.#state = GAME_STATE.MENU;
-    this.#menu = new Menu(this.getCanvasWidth(), this.getCanvasHeight());
-
-
-    // loop
-    this.setFPS(60);
-    this.lastFrameTime = 0;
-    this.currAnimation = null;
   }
 
   initCanvas() {
-    this.canvas = document.getElementById(this.#elementID);
     this.ctx = null;
     this.setupHighDPICanvas();
     this.ctx.textAlign = "center";
@@ -102,23 +106,16 @@ export class GameOfLife {
 
   draw() {
     switch (this.#state) {
-      case GAME_STATE.MENU:
-        this.#menu.draw(
-          this.ctx,
-          this.getCanvasWidth(),
-          this.getCanvasHeight(),
-        );
-        break;
       case GAME_STATE.PLAYING:
-        this.#grid.draw(this.ctx, true);
+        this.#grid.draw(this.ctx, true, this.colorStillLifeDifferent);
         break;
       default:
-        alert("unknown erro");
+        alert("Unknown game state");
     }
   }
 
   drawNoCompute() {
-    this.#grid.draw(this.ctx, false);
+    this.#grid.draw(this.ctx, false, colorStillLifeDifferent);
   }
 
   handleResizeEvent() {
@@ -131,20 +128,6 @@ export class GameOfLife {
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
     console.log(mouseX, mouseY);
-    // console.log(mouseX, mouseY);
-
-    // const currGridNumRows = this.grid.length;
-    // const currGridNumColumns = this.grid[0].length;
-
-    if (this.#state === GAME_STATE.MENU) {
-      const button_pressed = this.#menu.whichButtonWasPressed(mouseX, mouseY);
-      switch (button_pressed) {
-        case MENU_BUTTONS.GO:
-          this.#state = GAME_STATE.PLAYING;
-          break;
-      }
-    }
-    //const cellSquareSize =
   }
 
   setFPS(fps) {

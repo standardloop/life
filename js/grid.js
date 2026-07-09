@@ -88,7 +88,7 @@ export class Grid {
     ctx.fillRect(0, 0, currMatrixNumRows, currMatrixNumColumns);
   }
 
-  drawMatrix(ctx, computeNext) {
+  drawMatrix(ctx, computeNext, colorStillLifeDifferent) {
     if (computeNext) {
       this.computeNextGeneration();
     }
@@ -100,7 +100,7 @@ export class Grid {
     for (let i = 0; i < currMatrixNumRows; i++) {
       for (let j = 0; j < currMatrixNumColumns; j++) {
         const cell = this.#matrix[i][j];
-        cell.draw(ctx, i, j);
+        cell.draw(ctx, i, j, colorStillLifeDifferent);
       }
     }
   }
@@ -167,8 +167,8 @@ export class Grid {
     ctx.fillRect(currMatrixNumRows, currMatrixNumColumns, drawWidth, drawWidth);
   }
 
-  draw(ctx, computeNext) {
-    this.drawMatrix(ctx, computeNext);
+  draw(ctx, computeNext, colorStillLifeDifferent) {
+    this.drawMatrix(ctx, computeNext, colorStillLifeDifferent);
     this.drawMatrixGridLines(ctx);
   }
 

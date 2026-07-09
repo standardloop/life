@@ -4,14 +4,40 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
+    <script type="module" src="js/cell.js"></script>
+    <script type="module" src="js/grid.js"></script>
+    <script type="module" src="js/game.js"></script>
+    <script type="module" src="js/script.js"></script>
   </head>
 
   <body>
+    <div id="menuScreen">
+      <h1>LIFE</h1>
+
+      <label for="fpsSlider">FPS: <span id="fpsValue">60</span></label>
+      <input type="range" id="fpsSlider" min="1" max="60" step="1" value="60" />
+      <div class="sliderRange"><span>1</span><span>60</span></div>
+
+      <label for="scaleSlider">Scale: <span id="scaleValue">2</span></label>
+      <input
+        type="range"
+        id="scaleSlider"
+        min="1"
+        max="100"
+        step="1"
+        value="2"
+      />
+      <div class="sliderRange"><span>1</span><span>100</span></div>
+
+      <label for="colorStill" class="colorStill">
+        <input type="checkbox" id="colorStill" checked />
+        Color Still Life Differently
+      </label>
+
+      <br />
+      <button id="startBtn">GO</button>
+    </div>
+
     <canvas id="gameOfLifeCanvas"></canvas>
-    <script type="module" src="js/cell.js"></script>
-    <script type="module" src="js/grid.js"></script>
-    <script type="module" src="js/menu.js"></script>
-    <script type="module" src="js/game.js"></script>
-    <script type="module" src="js/script.js"></script>
   </body>
 </html>

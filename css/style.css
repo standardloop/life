@@ -1,21 +1,97 @@
-html,
 body {
   margin: 0;
-  padding: 0;
-  background-color: #000000;
-  overflow: hidden;
+  background: #000000;
+  color: #eee;
+  font-family: sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
-canvas {
+#menuScreen {
+  background: #1c1c1c;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+#menuScreen h1 {
+  margin-top: 0;
+}
+
+#menuScreen label {
   display: block;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-  /* outline: 1px */
-  /* border: 1px solid rgb(255, 0, 0); */
+  margin: 15px 0 5px;
+}
+
+#menuScreen select {
+  font-size: 1rem;
+  padding: 5px 10px;
+}
+
+#fpsSlider {
+  width: 220px;
+  display: block;
+  margin: 5px auto 0;
+}
+
+#scaleSlide {
+  width: 220px;
+  display: block;
+  margin: 5px auto 0;
+}
+
+.sliderRange {
+  display: flex;
+  justify-content: space-between;
+  width: 220px;
+  margin: 0 auto;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.toggleLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0 5px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.toggleLabel input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+#startBtn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  font-size: 1rem;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#startBtn:hover {
+  background: #43a047;
+}
+
+#gameOfLifeCanvas {
+  background: #000000;
+  display: none;
+}
+
+#hud {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 14px;
+  color: #0f0;
+  display: none;
 }
