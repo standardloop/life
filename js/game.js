@@ -27,12 +27,12 @@ export const GAME_STATE = Object.freeze({
 export class GameOfLife {
   #elementID;
   #dpr;
-  #resolution;
+  #gridScale;
   #grid;
   #state;
   #menu;
-  constructor(elementID, resolution) {
-    this.#resolution = resolution;
+  constructor(elementID) {
+    this.#gridScale = 1;
     this.#elementID = elementID;
     this.initCanvas();
     this.#grid = new Grid(
@@ -44,10 +44,9 @@ export class GameOfLife {
     this.#state = GAME_STATE.MENU;
     this.#menu = new Menu(this.getCanvasWidth(), this.getCanvasHeight());
 
-    this.gridScale = 2; // 1 is no scaling
 
     // loop
-    this.setFPS(1);
+    this.setFPS(60);
     this.lastFrameTime = 0;
     this.currAnimation = null;
   }
@@ -69,11 +68,11 @@ export class GameOfLife {
   }
 
   getCanvasWidth() {
-    return Math.floor(this.canvas.width / (this.#dpr * this.#resolution));
+    return Math.floor(this.canvas.width / (this.#dpr * this.#gridScale));
   }
 
   getCanvasHeight() {
-    return Math.floor(this.canvas.height / (this.#dpr * this.#resolution));
+    return Math.floor(this.canvas.height / (this.#dpr * this.#gridScale));
   }
 
   setDPR() {
@@ -91,7 +90,7 @@ export class GameOfLife {
     this.canvas.width = rect.width * this.#dpr;
     this.canvas.height = rect.height * this.#dpr;
 
-    const scaleAmount = Math.floor(this.#dpr * this.#resolution);
+    const scaleAmount = Math.floor(this.#dpr * this.#gridScale);
     this.ctx.scale(scaleAmount, scaleAmount);
 
     const width = Math.floor(rect.width);

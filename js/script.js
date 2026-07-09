@@ -4,7 +4,7 @@ let game;
 
 // main
 window.onload = () => {
-  game = new GameOfLife("gameOfLifeCanvas", 2);
+  game = new GameOfLife("gameOfLifeCanvas");
   game.start();
 };
 
