@@ -42,6 +42,7 @@ export class GameOfLife {
       colorStillLifeDifferent: true,
       showFPS: true,
       drawGridLines: true,
+      allowClickInput: true,
     };
 
     this.lastFrameTime = 0;
@@ -126,6 +127,7 @@ export class GameOfLife {
         this.#grid.draw(
           this.ctx,
           menuScreen.style.display === "none",
+          this.scaleAmount,
           this.options.colorStillLifeDifferent,
           this.options.drawGridLines,
         );
@@ -136,7 +138,13 @@ export class GameOfLife {
   }
 
   drawNoCompute() {
-    this.#grid.draw(this.ctx, false, colorStillLifeDifferent);
+    this.#grid.draw(
+      this.ctx,
+      false,
+      this.scaleAmount,
+      this.options.colorStillLifeDifferent,
+      this.options.drawGridLines,
+    );
   }
 
   handleResizeEvent() {
@@ -148,10 +156,13 @@ export class GameOfLife {
   }
 
   handleClickEvent(event) {
-    const rect = this.canvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-    console.log(mouseX, mouseY);
+    if (this.options.allowClickInput) {
+      const rect = this.canvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+      this.#grid.handleClickEvent(mouseX, mouseY);
+      console.log(mouseX, mouseY);
+    }
   }
 
   setFPS(fps) {

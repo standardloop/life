@@ -18,6 +18,7 @@ const initialPercentAliveSlide = document.getElementById(
 const colorStillLifeToggle = document.getElementById("colorStillToggle");
 const fpsToggle = document.getElementById("fpsToggle");
 const drawGridLinesToggle = document.getElementById("drawGridLinesToggle");
+const allowClickInputToggle = document.getElementById("allowClickInputToggle");
 
 hud.style.display = fpsToggle.checked ? "block" : "none";
 
@@ -79,4 +80,8 @@ colorStillLifeToggle.addEventListener("change", (e) => {
 
 drawGridLinesToggle.addEventListener("change", (e) => {
   game.setOption("drawGridLines", e.target.checked);
+});
+
+allowClickInputToggle.addEventListener("change", (e) => {
+  game.setOption("allowClickInput", e.target.checked);
 });

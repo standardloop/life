@@ -85,7 +85,7 @@ export class Grid {
     ctx.fillRect(0, 0, currMatrixNumRows, currMatrixNumColumns);
   }
 
-  drawMatrix(ctx, computeNext, colorStillLifeDifferent) {
+  drawMatrix(ctx, computeNext, scale, colorStillLifeDifferent) {
     if (computeNext) {
       this.computeNextGeneration();
     }
@@ -97,7 +97,7 @@ export class Grid {
     for (let i = 0; i < currMatrixNumRows; i++) {
       for (let j = 0; j < currMatrixNumColumns; j++) {
         const cell = this.#matrix[i][j];
-        cell.draw(ctx, i, j, colorStillLifeDifferent);
+        cell.draw(ctx, i, j, scale, colorStillLifeDifferent);
       }
     }
   }
@@ -159,12 +159,14 @@ export class Grid {
     ctx.fillRect(currMatrixNumRows, currMatrixNumColumns, drawWidth, drawWidth);
   }
 
-  draw(ctx, computeNext, colorStillLifeDifferent, drawGridLines) {
-    this.drawMatrix(ctx, computeNext, colorStillLifeDifferent);
+  draw(ctx, computeNext, scale, colorStillLifeDifferent, drawGridLines) {
+    this.drawMatrix(ctx, computeNext, scale, colorStillLifeDifferent);
     if (drawGridLines) {
       this.drawMatrixGridLines(ctx);
     }
   }
+
+  handleClickEvent(mouseX, mouseY) {}
 
   handleResizeEvent(canvasWidth, canvasHeight) {
     // don't mess up the current, add either empty or random to new area
