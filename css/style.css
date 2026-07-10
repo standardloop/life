@@ -41,13 +41,13 @@ body {
   margin: 5px auto 0;
 }
 
-#scaleSlide {
+#scaleSlider {
   width: 220px;
   display: block;
   margin: 5px auto 0;
 }
 
-#initialPercentAliveSlide {
+#initialPercentAliveSlider {
   width: 220px;
   display: block;
   margin: 5px auto 0;
