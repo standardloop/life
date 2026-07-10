@@ -13,7 +13,6 @@ const scaleSlider = document.getElementById("scaleSlider");
 const colorStillLifeToggle = document.getElementById("colorStill");
 
 const fpsToggle = document.getElementById("fpsToggle");
-hud.style.display = fpsToggle.checked ? "block" : "none";
 
 fpsToggle.addEventListener("change", (e) => {
   game.setOption("showFPS", e.target.checked);
