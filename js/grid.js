@@ -167,7 +167,7 @@ export class Grid {
   }
 
   handleClickEvent(mouseX, mouseY) {
-    console.log(mouseX, mouseY);
+    //console.log(mouseX, mouseY);
 
     const currMatrixNumRows = this.#matrix.length;
     const currMatrixNumColumns = this.#matrix[0].length;
@@ -176,7 +176,7 @@ export class Grid {
     for (let i = 0; i < currMatrixNumRows; i++) {
       for (let j = 0; j < currMatrixNumColumns; j++) {
         //console.log(this.#matrix[i][j].x, this.#matrix[i][j].y);
-        console.log(this.#matrix[i][j]);
+        //console.log(this.#matrix[i][j]);
         if (this.#matrix[i][j].inBounds(mouseX, mouseY)) {
           this.#matrix[i][j].value = 1 - this.#matrix[i][j].value;
         }
