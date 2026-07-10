@@ -12,18 +12,19 @@
 
   <body>
     <canvas id="gameOfLifeCanvas"></canvas>
+    <div id="hud">FPS: --</div>
     <div id="menuScreen">
       <div id="menuPanel">
         <h1>LIFE</h1>
 
-        <label for="fpsSlider">FPS: <span id="fpsValue">60</span></label>
+        <label for="fpsSlider">FPS Target: <span id="fpsValue">15</span></label>
         <input
           type="range"
           id="fpsSlider"
           min="1"
           max="60"
           step="1"
-          value="60"
+          value="15"
         />
         <div class="sliderRange"><span>1</span><span>60</span></div>
 
@@ -37,6 +38,11 @@
           value="20"
         />
         <div class="sliderRange"><span>1</span><span>100</span></div>
+
+        <label for="fpsToggle" class="toggleLabel">
+          <input type="checkbox" id="fpsToggle" checked />
+          Show FPS counter
+        </label>
 
         <label for="colorStill" class="colorStill">
           <input type="checkbox" id="colorStill" checked />

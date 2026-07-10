@@ -5,11 +5,20 @@ let game;
 const canvas = document.getElementById("gameOfLifeCanvas");
 const startBtn = document.getElementById("startBtn");
 const menuScreen = document.getElementById("menuScreen");
+const hud = document.getElementById("hud");
 
 const fpsSlider = document.getElementById("fpsSlider");
 const scaleSlider = document.getElementById("scaleSlider");
 
 const colorStillLifeToggle = document.getElementById("colorStill");
+
+const fpsToggle = document.getElementById("fpsToggle");
+hud.style.display = fpsToggle.checked ? "block" : "none";
+
+fpsToggle.addEventListener("change", (e) => {
+  game.setOption("showFPS", e.target.checked);
+  hud.style.display = e.target.checked ? "block" : "none";
+});
 
 // main
 window.onload = () => {
@@ -30,9 +39,9 @@ document.addEventListener("visibilitychange", () => {
     game.stop();
   } else {
     // only after menu is gone?
-    if (menuScreen.style.display === "none") {
-      game.start();
-    }
+    // if (menuScreen.style.display === "none") {
+    game.start();
+    // }
   }
 });
 
@@ -59,5 +68,5 @@ scaleSlider.addEventListener("input", (e) => {
 });
 
 colorStill.addEventListener("change", (e) => {
-  game.setColorStillLifeDifferent(e.target.checked);
+  game.setOption("colorStillLifeDifferent", e.target.checked);
 });

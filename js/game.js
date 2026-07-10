@@ -32,17 +32,24 @@ export class GameOfLife {
     this.canvas = canvas;
     this.setGridScale(20);
     this.#state = GAME_STATE.PLAYING;
-    this.setColorStillLifeDifferent(true);
 
-    // loop
-    this.setFPS(60);
+    this.setFPS(15);
+    this.options = {
+      colorStillLifeDifferent: true,
+      showFPS: true,
+    };
 
     this.lastFrameTime = 0;
     this.currAnimation = null;
+
+    // fps counter (for display only, not tied to logic)
+    this.frameCount = 0;
+    this.fpsTimer = 0;
+    this.displayFPS = 0;
   }
 
-  setColorStillLifeDifferent(colorStillLifeDifferent) {
-    this.colorStillLifeDifferent = colorStillLifeDifferent;
+  setOption(key, value) {
+    this.options[key] = value;
   }
 
   setGridScale(gridScale) {
@@ -107,7 +114,11 @@ export class GameOfLife {
   draw() {
     switch (this.#state) {
       case GAME_STATE.PLAYING:
-        this.#grid.draw(this.ctx, true, this.colorStillLifeDifferent);
+        this.#grid.draw(
+          this.ctx,
+          true,
+          this.options["colorStillLifeDifferent"],
+        );
         break;
       default:
         alert("Unknown game state");
@@ -135,6 +146,18 @@ export class GameOfLife {
     this.fpsInterval = 1000 / fps;
   }
 
+  trackFPS(currentTime) {
+    this.frameCount++;
+    if (currentTime - this.fpsTimer >= 500) {
+      this.displayFPS = Math.round(
+        (this.frameCount * 1000) / (currentTime - this.fpsTimer),
+      );
+      this.frameCount = 0;
+      this.fpsTimer = currentTime;
+      document.getElementById("hud").textContent = `FPS: ${this.displayFPS}`;
+    }
+  }
+
   start() {
     this.lastFrameTime = performance.now();
     this.loop(this.lastFrameTime);
@@ -153,6 +176,9 @@ export class GameOfLife {
     if (elapsed > this.fpsInterval) {
       this.lastFrameTime = timestamp - (elapsed % this.fpsInterval);
       this.draw();
+      if (this.options.showFPS) {
+        this.trackFPS(timestamp);
+      }
     }
   };
 }
