@@ -30,10 +30,14 @@ export class GameOfLife {
   #state;
   constructor(canvas) {
     this.canvas = canvas;
+    this.initialPercentAlive = 40;
+    // this.setInitialPercentAlive(40);
     this.setGridScale(20);
+
     this.#state = GAME_STATE.PLAYING;
 
     this.setFPS(15);
+
     this.options = {
       colorStillLifeDifferent: true,
       showFPS: true,
@@ -55,11 +59,15 @@ export class GameOfLife {
   setGridScale(gridScale) {
     this.#gridScale = gridScale;
     this.initCanvas();
+    this.initGrid();
+  }
+
+  initGrid() {
+    //console.log(this.initialPercentAlive / 100);
     this.#grid = new Grid(
       this.getCanvasWidth(),
       this.getCanvasHeight(),
-      true,
-      0.3,
+      this.initialPercentAlive / 100,
     );
   }
 
@@ -116,7 +124,7 @@ export class GameOfLife {
       case GAME_STATE.PLAYING:
         this.#grid.draw(
           this.ctx,
-          true,
+          menuScreen.style.display === "none",
           this.options["colorStillLifeDifferent"],
         );
         break;
@@ -130,8 +138,11 @@ export class GameOfLife {
   }
 
   handleResizeEvent() {
+    cancelAnimationFrame(this.currAnimation);
     this.initCanvas();
     this.#grid.handleResizeEvent(this.getCanvasWidth(), this.getCanvasHeight());
+    requestAnimationFrame(this.loop);
+    this.drawNoCompute();
   }
 
   handleClickEvent(event) {
@@ -144,6 +155,11 @@ export class GameOfLife {
   setFPS(fps) {
     this.fps = fps;
     this.fpsInterval = 1000 / fps;
+  }
+
+  setInitialPercentAlive(initialPercentAlive) {
+    this.initialPercentAlive = initialPercentAlive;
+    this.initGrid();
   }
 
   trackFPS(currentTime) {

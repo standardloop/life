@@ -8,7 +8,12 @@ const menuScreen = document.getElementById("menuScreen");
 const hud = document.getElementById("hud");
 
 const fpsSlider = document.getElementById("fpsSlider");
+
 const scaleSlider = document.getElementById("scaleSlider");
+
+const initialPercentAliveSlide = document.getElementById(
+  "initialPercentAliveSlide",
+);
 
 const colorStillLifeToggle = document.getElementById("colorStill");
 
@@ -24,6 +29,7 @@ fpsToggle.addEventListener("change", (e) => {
 window.onload = () => {
   game = new GameOfLife(canvas);
   game.start();
+  // game.stop();
 };
 
 window.addEventListener("resize", () => {
@@ -31,7 +37,8 @@ window.addEventListener("resize", () => {
   // game.handleResizeEvent();
   // requestAnimationFrame(gameLoop);
   // game.drawNoCompute();
-  console.log("TODO");
+  game.handleResizeEvent();
+  // console.log("TODO");
 });
 
 document.addEventListener("visibilitychange", () => {
@@ -39,9 +46,7 @@ document.addEventListener("visibilitychange", () => {
     game.stop();
   } else {
     // only after menu is gone?
-    // if (menuScreen.style.display === "none") {
     game.start();
-    // }
   }
 });
 
@@ -65,6 +70,12 @@ scaleSlider.addEventListener("input", (e) => {
   const scale = parseInt(e.target.value);
   scaleValue.textContent = scale;
   game.setGridScale(scale);
+});
+
+initialPercentAliveSlider.addEventListener("input", (e) => {
+  const initialPercentAlive = parseInt(e.target.value);
+  initialPercentAliveValue.textContent = initialPercentAlive;
+  game.setInitialPercentAlive(initialPercentAlive);
 });
 
 colorStill.addEventListener("change", (e) => {

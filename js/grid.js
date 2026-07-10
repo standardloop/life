@@ -1,19 +1,15 @@
 import { Cell } from "./cell.js";
 
-const getBiasedBit = (chanceOfOne) => {
-  return Math.random() <= chanceOfOne ? 1 : 0;
-};
+function getBiasedBit(chanceOfOne) {
+  return chanceOfOne > Math.random() ? 1 : 0;
+}
 
-function makeMatrix(rows, cols, filledIn, percentFilled) {
+function makeMatrix(rows, cols, percentFilled) {
   let matrix = [];
   for (let i = 0; i < rows; i++) {
     const row = [];
     for (let j = 0; j < cols; j++) {
-      if (filledIn) {
-        row.push(new Cell(getBiasedBit(percentFilled)));
-      } else {
-        row.push(new Cell(0));
-      }
+      row.push(new Cell(getBiasedBit(percentFilled)));
     }
     matrix.push(row);
   }
@@ -62,23 +58,24 @@ function arraysEqual(arr1, arr2) {
 export class Grid {
   #matrix;
   #population;
-  constructor(canvasWidth, canvasHeight, filledIn, percentFilled) {
-    this.#matrix = makeMatrix(
-      canvasWidth,
-      canvasHeight,
-      filledIn,
-      percentFilled,
-    );
+  constructor(canvasWidth, canvasHeight, percentFilled) {
+    this.#matrix = makeMatrix(canvasWidth, canvasHeight, percentFilled);
     this.#population = this.countAliveCells();
+    //console.log(this.percentAliveCells());
   }
+
   countAliveCells() {
     return countValueInMatrix(this.#matrix, 1);
   }
   countDeadCells() {
-    return countValueInMatrix(this.matrix, 0);
+    return countValueInMatrix(this.#matrix, 0);
   }
+
   percentAliveCells() {
-    return (countAliveCells() * 100) / (countAliveCells() + countDeadCells());
+    return (
+      (this.countAliveCells() * 100) /
+      (this.countAliveCells() + this.countDeadCells())
+    );
   }
 
   drawEmpty(ctx) {
@@ -109,7 +106,7 @@ export class Grid {
     const currMatrixNumRows = this.#matrix.length;
     const currMatrixNumColumns = this.#matrix[0].length;
 
-    let next = makeMatrix(currMatrixNumRows, currMatrixNumColumns, false, null);
+    let next = makeMatrix(currMatrixNumRows, currMatrixNumColumns, 0);
 
     let nextPopulation = 0;
     for (let i = 0; i < currMatrixNumRows; i++) {
@@ -129,11 +126,6 @@ export class Grid {
       }
     }
 
-    // for fun
-    // if nothing has changed, then reset
-    // if (arraysEqual(this.#matrix, next)) {
-    //   next = makeMatrix(currMatrixNumRows, currMatrixNumColumns, true);
-    // }
     this.#population = nextPopulation;
     this.#matrix = next;
   }
@@ -179,7 +171,7 @@ export class Grid {
     // draw new array on middle
     // TODO
 
-    let next = makeMatrix(canvasWidth, canvasHeight, false, null);
+    let next = makeMatrix(canvasWidth, canvasHeight, 0);
     const rows =
       this.#matrix.length > next.length ? next.length : this.#matrix.length;
     const cols =

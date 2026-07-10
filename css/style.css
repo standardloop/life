@@ -47,6 +47,12 @@ body {
   margin: 5px auto 0;
 }
 
+#initialPercentAliveSlide {
+  width: 220px;
+  display: block;
+  margin: 5px auto 0;
+}
+
 .sliderRange {
   display: flex;
   justify-content: space-between;
