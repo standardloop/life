@@ -41,6 +41,7 @@ export class GameOfLife {
     this.options = {
       colorStillLifeDifferent: true,
       showFPS: true,
+      drawGridLines: true,
     };
 
     this.lastFrameTime = 0;
@@ -125,7 +126,8 @@ export class GameOfLife {
         this.#grid.draw(
           this.ctx,
           menuScreen.style.display === "none",
-          this.options["colorStillLifeDifferent"],
+          this.options.colorStillLifeDifferent,
+          this.options.drawGridLines,
         );
         break;
       default:

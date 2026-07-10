@@ -159,9 +159,11 @@ export class Grid {
     ctx.fillRect(currMatrixNumRows, currMatrixNumColumns, drawWidth, drawWidth);
   }
 
-  draw(ctx, computeNext, colorStillLifeDifferent) {
+  draw(ctx, computeNext, colorStillLifeDifferent, drawGridLines) {
     this.drawMatrix(ctx, computeNext, colorStillLifeDifferent);
-    this.drawMatrixGridLines(ctx);
+    if (drawGridLines) {
+      this.drawMatrixGridLines(ctx);
+    }
   }
 
   handleResizeEvent(canvasWidth, canvasHeight) {

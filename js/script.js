@@ -15,9 +15,10 @@ const initialPercentAliveSlide = document.getElementById(
   "initialPercentAliveSlide",
 );
 
-const colorStillLifeToggle = document.getElementById("colorStill");
-
+const colorStillLifeToggle = document.getElementById("colorStillToggle");
 const fpsToggle = document.getElementById("fpsToggle");
+const drawGridLinesToggle = document.getElementById("drawGridLinesToggle");
+
 hud.style.display = fpsToggle.checked ? "block" : "none";
 
 fpsToggle.addEventListener("change", (e) => {
@@ -29,16 +30,10 @@ fpsToggle.addEventListener("change", (e) => {
 window.onload = () => {
   game = new GameOfLife(canvas);
   game.start();
-  // game.stop();
 };
 
 window.addEventListener("resize", () => {
-  // cancelAnimationFrame(currAnimation);
-  // game.handleResizeEvent();
-  // requestAnimationFrame(gameLoop);
-  // game.drawNoCompute();
   game.handleResizeEvent();
-  // console.log("TODO");
 });
 
 document.addEventListener("visibilitychange", () => {
@@ -50,13 +45,13 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-// document.addEventListener("click", (event) => {
-//   game.handleClickEvent(event);
-// });
+document.addEventListener("click", (event) => {
+  game.handleClickEvent(event);
+});
 
 startBtn.addEventListener("click", () => {
   menuScreen.style.display = "none";
-  // hud.style.display = "block";
+  hud.style.display = "block";
   game.start();
 });
 
@@ -78,6 +73,10 @@ initialPercentAliveSlider.addEventListener("input", (e) => {
   game.setInitialPercentAlive(initialPercentAlive);
 });
 
-colorStill.addEventListener("change", (e) => {
+colorStillLifeToggle.addEventListener("change", (e) => {
   game.setOption("colorStillLifeDifferent", e.target.checked);
+});
+
+drawGridLinesToggle.addEventListener("change", (e) => {
+  game.setOption("drawGridLines", e.target.checked);
 });

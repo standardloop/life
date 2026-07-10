@@ -46,21 +46,26 @@
         <input
           type="range"
           id="initialPercentAliveSlider"
-          min="1"
+          min="0"
           max="100"
           step="1"
           value="40"
         />
-        <div class="sliderRange"><span>1</span><span>100</span></div>
+        <div class="sliderRange"><span>0</span><span>100</span></div>
 
         <label for="fpsToggle" class="toggleLabel">
           <input type="checkbox" id="fpsToggle" checked />
           Show FPS counter
         </label>
 
-        <label for="colorStill" class="colorStill">
-          <input type="checkbox" id="colorStill" checked />
+        <label for="colorStillToggle" class="toggleLabel">
+          <input type="checkbox" id="colorStillToggle" checked />
           Color Still Life Differently
+        </label>
+
+        <label for="drawGridLinesToggle" class="toggleLabel">
+          <input type="checkbox" id="drawGridLinesToggle" checked />
+          Draw Gridlines
         </label>
 
         <br />
