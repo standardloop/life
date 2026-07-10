@@ -18,6 +18,10 @@ import { Grid } from "./grid.js";
 //   return false;
 // };
 
+function isMenuGone() {
+  return menuScreen.style.display === "none";
+}
+
 export const GAME_STATE = Object.freeze({
   PLAYING: 0,
 });
@@ -126,8 +130,8 @@ export class GameOfLife {
       case GAME_STATE.PLAYING:
         this.#grid.draw(
           this.ctx,
-          menuScreen.style.display === "none",
-          this.scaleAmount,
+          isMenuGone(),
+          this.#gridScale,
           this.options.colorStillLifeDifferent,
           this.options.drawGridLines,
         );
@@ -141,7 +145,7 @@ export class GameOfLife {
     this.#grid.draw(
       this.ctx,
       false,
-      this.scaleAmount,
+      this.#gridScale,
       this.options.colorStillLifeDifferent,
       this.options.drawGridLines,
     );
@@ -156,13 +160,14 @@ export class GameOfLife {
   }
 
   handleClickEvent(event) {
+    this.stop();
     if (this.options.allowClickInput) {
       const rect = this.canvas.getBoundingClientRect();
       const mouseX = event.clientX - rect.left;
       const mouseY = event.clientY - rect.top;
       this.#grid.handleClickEvent(mouseX, mouseY);
-      console.log(mouseX, mouseY);
     }
+    this.start();
   }
 
   setFPS(fps) {

@@ -166,7 +166,23 @@ export class Grid {
     }
   }
 
-  handleClickEvent(mouseX, mouseY) {}
+  handleClickEvent(mouseX, mouseY) {
+    console.log(mouseX, mouseY);
+
+    const currMatrixNumRows = this.#matrix.length;
+    const currMatrixNumColumns = this.#matrix[0].length;
+
+    let count = 0;
+    for (let i = 0; i < currMatrixNumRows; i++) {
+      for (let j = 0; j < currMatrixNumColumns; j++) {
+        //console.log(this.#matrix[i][j].x, this.#matrix[i][j].y);
+        console.log(this.#matrix[i][j]);
+        if (this.#matrix[i][j].inBounds(mouseX, mouseY)) {
+          this.#matrix[i][j].value = 1 - this.#matrix[i][j].value;
+        }
+      }
+    }
+  }
 
   handleResizeEvent(canvasWidth, canvasHeight) {
     // don't mess up the current, add either empty or random to new area
