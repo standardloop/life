@@ -5,10 +5,21 @@ vars:
   PORT: 8080
 
 tasks:
-  default: task --list-all
+  default:
+    silent: true
+    cmds:
+      - task --list-all
+    desc: |
+      List all avaiable tasks.
   run:
     cmds:
       - open -a "Google Chrome" http://localhost:8080/
       - python3 -m http.server {{.PORT}}
+    desc: |
+      Run a Python3 HTTP server to serve the static files.
 
-  fmt: npx prettier --write .
+  fmt:
+    cmds:
+      - npx prettier --write .
+    desc: |
+      Format the files with prettier.
