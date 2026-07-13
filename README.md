@@ -13,6 +13,10 @@ This Repo is an implementaiton of Conway's Game of Life.
 
 This program leverages Canvas API.
 
+## Screenshot
+
+![alt text](https://raw.githubusercontent.com/standardloop/life/refs/heads/main/docs/screenshot.png)
+
 ## Running
 
 Please see the repo's `Taskfile` for running a local server and testing locally.
@@ -20,7 +24,7 @@ Please see the repo's `Taskfile` for running a local server and testing locally.
 ```sh
 $ task
 task: Available tasks for this project:
-* default:       List all avaiable tasks. 
-* fmt:           Format the files with prettier. 
-* run:           Run a Python3 HTTP server to serve the static files. 
+* default:       List all avaiable tasks.
+* fmt:           Format the files with prettier.
+* run:           Run a Python3 HTTP server to serve the static files.
 ```
